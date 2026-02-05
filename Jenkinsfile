@@ -39,17 +39,21 @@ pipeline {
         }
 
         stage('Deploy') {
+            when {
+                branch 'main'
+            }
             steps {
                 withCredentials([
                     string(credentialsId: 'RENDER_API_KEY', variable: 'API_KEY'),
                     string(credentialsId: 'RENDER_SERVICE_ID', variable: 'SERVICE_ID')
                 ]) {
-                    sh """
-            curl -X POST https://api.render.com/deploy/srv-${SERVICE_ID} \\
+
+                /* CORRECT */
+                sh ' curl -X POST https://api.render.com/deploy/srv-${SERVICE_ID} \\
               -H 'Accept: application/json' \\
-              -H 'Authorization: Bearer ${API_KEY}'
-            """
-        }
+              -H 'Authorization: Bearer ${API_KEY}''
+
+                }
             }
         }
     }
