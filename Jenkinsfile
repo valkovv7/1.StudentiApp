@@ -10,8 +10,7 @@
 //     }
 // }
 
-
-
+/* groovylint-disable-next-line CompileStatic */
 pipeline {
     agent {
         docker {
@@ -38,9 +37,8 @@ pipeline {
                 sh 'npm test'
             }
         }
-    }
-
-    stage('Deploy') {
+        
+        stage('Deploy') {
             steps {
                 // Call Render API using curl
                 sh """
@@ -50,5 +48,5 @@ pipeline {
                 """
             }
         }
-
+    }
 }
