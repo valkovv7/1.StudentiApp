@@ -51,7 +51,6 @@ pipeline {
                 sh ' curl -X POST https://api.render.com/deploy/srv-${SERVICE_ID} \
                     -H "Accept: application/json" \
                     -H "Authorization: Bearer ${API_KEY}"'
-
                 }
             }
         }
