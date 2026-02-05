@@ -1,7 +1,7 @@
 // .mocharc.js - Mocha config file
 const {colors, symbols} = 
   require('mocha/lib/reporters/base');
-// Change the default console UI colors
+// Change the default console UI colors!
 colors.pass = 32;
 colors.fail = 33;
 colors["error stack"] = 36;
