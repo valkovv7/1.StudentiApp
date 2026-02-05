@@ -19,6 +19,11 @@ pipeline {
         }
     }
 
+   environment {
+        RENDER_API_KEY = credentials('RENDER_API_KEY')
+        RENDER_SERVICE_ID = credentials('RENDER_SERVICE_ID')
+    }
+    
     stages {
         stage('Checkout') {
             steps {
@@ -42,7 +47,7 @@ pipeline {
             steps {
                 // Call Render API using curl
                 sh """
-                curl -X POST https://api.render.com/deploy/srv-${RENDER_SERVICE_ID} \\
+                curl -X POST https://api.render.com/deploy/${RENDER_SERVICE_ID} \\
                   -H 'Accept: application/json' \\
                   -H 'Authorization: Bearer ${RENDER_API_KEY}'
                 """
