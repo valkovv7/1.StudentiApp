@@ -19,11 +19,6 @@ pipeline {
         }
     }
 
-   environment {
-        RENDER_API_KEY = credentials('RENDER_API_KEY')
-        RENDER_SERVICE_ID = credentials('RENDER_SERVICE_ID')
-    }
-    
     stages {
         stage('Checkout') {
             steps {
@@ -42,15 +37,19 @@ pipeline {
                 sh 'npm test'
             }
         }
-        
+
         stage('Deploy') {
             steps {
-                // Call Render API using curl
-                sh """
-                curl -X POST https://api.render.com/deploy/${RENDER_SERVICE_ID} \\
-                  -H 'Accept: application/json' \\
-                  -H 'Authorization: Bearer ${RENDER_API_KEY}'
-                """
+                withCredentials([
+                    string(credentialsId: 'RENDER_API_KEY', variable: 'API_KEY'),
+                    string(credentialsId: 'RENDER_SERVICE_ID', variable: 'SERVICE_ID')
+                ]) {
+                    sh """
+            curl -X POST https://api.render.com/deploy/srv-${SERVICE_ID} \\
+              -H 'Accept: application/json' \\
+              -H 'Authorization: Bearer ${API_KEY}'
+            """
+        }
             }
         }
     }
