@@ -1,13 +1,15 @@
 pipeline {
     agent any
     stages {
-        stage('Test Docker') {
+        stage('Docker Check') {
             steps {
-                sh 'docker version'
+                sh 'whoami'
+                sh 'docker ps'
             }
         }
     }
 }
+
 
 
 // pipeline {
