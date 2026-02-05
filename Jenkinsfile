@@ -39,4 +39,16 @@ pipeline {
             }
         }
     }
+
+    stage('Deploy') {
+            steps {
+                // Call Render API using curl
+                sh """
+                curl -X POST https://api.render.com/deploy/srv-${RENDER_SERVICE_ID} \\
+                  -H 'Accept: application/json' \\
+                  -H 'Authorization: Bearer ${RENDER_API_KEY}'
+                """
+            }
+        }
+
 }
