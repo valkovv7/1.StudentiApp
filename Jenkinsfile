@@ -38,23 +38,6 @@ pipeline {
             }
         }
 
-        // stage('Deploy') {
-        //     when {
-        //         branch 'main'
-        //     }
-        //     steps {
-        //         withCredentials([
-        //             string(credentialsId: 'RENDER_API_KEY', variable: 'API_KEY'),
-        //             string(credentialsId: 'RENDER_SERVICE_ID', variable: 'SERVICE_ID')
-        //         ]) {
-
-        //         sh ' curl -X POST https://api.render.com/deploy/${SERVICE_ID} \
-        //             -H "Accept: application/json" \
-        //             -H "Authorization: Bearer ${API_KEY}"'
-        //         }
-        //     }
-        // }
-
         stage('Deploy') {
             steps {
                 withCredentials([
@@ -62,7 +45,7 @@ pipeline {
                     string(credentialsId: 'RENDER_SERVICE_ID', variable: 'SERVICE_ID')
                 ]) {
                     sh """
-                    curl -X POST https://api.render.com/deploy/$SERVICE_ID \
+                    curl -X POST https://api.render.com/v1/services/$SERVICE_ID/deploys \
                       -H 'Accept: application/json' \
                       -H 'Authorization: Bearer $API_KEY'
                     """
